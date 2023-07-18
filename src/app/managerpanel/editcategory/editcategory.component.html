@@ -1,0 +1,26 @@
+<mat-card class="example-card">
+  <span class="center">Edit Category</span>
+<mat-form-field class="example-full-width">
+  <input matInput class="form-control" placeholder="Category Name" maxlength=25  name="categoryname" [(ngModel)]="category.categoryname">
+</mat-form-field>
+<mat-form-field class="example-full-width">
+    <input matInput class="form-control" placeholder="Description" maxlength=80  name="description" [(ngModel)]="category.description">
+  </mat-form-field>
+
+<br>
+<img mat-card-image src="{{imageUrl}}" alt="Photo of a Shiba Inu">
+<br>
+<div class="centerphoto">
+  <button class="button" mat-raised-button (click)="fileInput.click()">
+  <i class="material-icons">add</i>
+  <span>Select A Photo</span>
+  <input #fileInput type="file" (change)="onFileSelected($event)" style="display:none;" />
+</button>
+</div>
+
+
+<mat-card-actions>
+  <button mat-button style="margin-left: 40%" (click)="onSubmit()">Save Changes</button>
+</mat-card-actions>
+</mat-card>
+

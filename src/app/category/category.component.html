@@ -1,0 +1,9 @@
+
+<ul class="categoryList sticky" style="z-index: 9; border-bottom: 1px solid #ebebeb">
+  <li *ngFor="let category of categories | slice:0:8" [routerLink]="['/notes', category.id]" routerLinkActive="active">
+    {{category.categoryname | uppercase}}
+  </li>
+  <li [routerLink]="['/categories']" routerLinkActive="active">
+MORE
+  </li>
+</ul>

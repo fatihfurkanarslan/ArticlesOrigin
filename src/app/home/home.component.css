@@ -1,0 +1,41 @@
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.popularonblog {
+  position: fixed;
+  margin-right: 12%;
+
+}
+
+
+.sidebar-item {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+
+.make-me-sticky {
+  position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+  padding: 0;
+}
+
+hr {
+  font-weight: bold;
+}
+
+.populartitle {
+  padding-top: 5px;
+  text-align: center;
+}

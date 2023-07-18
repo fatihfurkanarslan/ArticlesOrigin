@@ -1,0 +1,47 @@
+
+<form #editForm="ngForm" id="editForm" class="example-container">
+
+    <div class="form-group">
+    <mat-form-field style="width: 100%">
+      <mat-label>Choose The Category</mat-label>
+      <mat-select style="width: 100%" [(value)]="selectedOption">
+        <mat-option *ngFor="let cat of categories" [value]="cat.id">
+          {{cat?.categoryname}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+
+  <mat-form-field class="example-full-width">
+      <input matInput class="form-control" required placeholder="Title" maxlength=100  name="title" [(ngModel)]="note.title">
+    </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+      <input matInput class="form-control" required placeholder="Description" maxlength=150  name="description" [(ngModel)]="note.description">
+    </mat-form-field>
+
+<p>Please insert related tag about your article </p>
+
+<tag-input [(ngModel)]='tagList' name="tagList" [modelAsStrings]="true" [maxItems]='5'></tag-input>
+<br>
+<mat-card class="example-card">
+  <img mat-card-image src="{{photoUrl}}" alt="Photo of a Shiba Inu">
+</mat-card>
+
+<br>
+<button class="button" mat-raised-button (click)="fileInput.click()">
+  <i class="material-icons">add</i>
+  <span>Select A Photo</span>
+  <input #fileInput type="file" (change)="onFileSelected($event)" style="display:none;" />
+</button>
+<br>
+
+<div class="row">
+  &nbsp;&nbsp;&nbsp;
+  <button aria-label="Show an example snack-bar" (click)="onSubmit()"  mat-raised-button>Post </button>
+
+</div>
+
+
+</form>

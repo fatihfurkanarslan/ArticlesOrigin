@@ -1,0 +1,11 @@
+
+<form [formGroup]="form" *ngIf="id" (ngSubmit)="onSubmit()">
+
+  <mat-form-field class="example-full-width">
+      <input matInput formControlName="Text" required placeholder="Write A Response"  name="text" [(ngModel)]="model.text" >
+  </mat-form-field>
+
+  <br>
+ <button aria-label="Show an example snack-bar" mat-raised-button>Post </button>
+
+</form>

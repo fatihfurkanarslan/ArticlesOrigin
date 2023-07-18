@@ -1,0 +1,25 @@
+ <div class="row">
+
+          <div *ngFor="let category of categories" class="col-lg-4 col-md-12 mb-lg-0 mb-4">
+
+
+              <mat-card class="example-card" [routerLink]="['/notes', category.id]" routerLinkActive="active">
+                  <mat-card-header>
+
+                    <mat-card-title>{{category.categoryname |uppercase}}</mat-card-title>
+
+                  </mat-card-header>
+                  <img mat-card-image src="{{category.photoUrl}}" alt="Photo of a Shiba Inu">
+                  <mat-card-content>
+                    <p>
+                      {{category.description}}
+                    </p>
+                  </mat-card-content>
+
+                </mat-card>
+
+                </div>
+                <!-- Grid column -->
+          </div>
+
+

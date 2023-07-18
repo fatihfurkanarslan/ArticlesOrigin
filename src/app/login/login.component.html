@@ -1,0 +1,71 @@
+<!-- <mat-card class="image">
+  <mat-card-title>Login</mat-card-title>
+
+  <p>
+    <span style="color:#d21f3c" matBadge="4" matBadgeOverlap="false" *ngIf="error">{{error}}</span>
+  </p>
+  <br>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="login()">
+      <p>
+        <mat-form-field>
+          <input type="text" matInput placeholder="Username" formControlName="username"
+            required [(ngModel)]="model.username" name="username">
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <input type="password" matInput placeholder="Password" formControlName="password"
+            required [(ngModel)]="model.password" name="password">
+        </mat-form-field>
+      </p>
+
+      <div class="button">
+        <button mat-raised-button type="submit" mat-button>Login</button>
+        <hr>
+        <button mat-raised-button type="submit" [routerLink]="['/register']" routerLinkActive="active">Register</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card> -->
+
+
+
+<div class="container" id="container">
+	<div class="form-container sign-in-container">
+		
+		<form [formGroup]="form" (ngSubmit)="login()">
+			<h1>Sign in</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			<span>or use your account</span>
+			<input type="text" matInput placeholder="Username" formControlName="username"
+            required [(ngModel)]="model.username" name="username">
+			<input type="password" matInput placeholder="Password" formControlName="password"
+            required [(ngModel)]="model.password" name="password">
+			<a href="#">Forgot your password?</a>
+			<button type="submit">Sign In</button>
+			<br>
+		<span style="color:#d21f3c" matBadge="4" matBadgeOverlap="false" *ngIf="error">{{error}}</span>
+		<br>
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Hello, Friend!</h1>
+				<p>Enter your personal details and start journey with us</p>
+				<button class="ghost" id="signUp" type="submit" [routerLink]="['/register']" routerLinkActive="active">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</div>

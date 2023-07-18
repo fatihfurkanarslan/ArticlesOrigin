@@ -1,0 +1,64 @@
+<form #editForm="ngForm" id="editForm" class="example-container" (ngSubmit)="onSubmit()">
+
+  <!-- <div class="form-group">
+    <label for="favoriteValue">Choose The Category</label>
+    <select class="form-control" id="favoriteValue" name="selectedOption" [(ngModel)]="selectedOption">
+      <option *ngFor="let cat of categories" [ngValue]="cat.id">{{cat.name}}</option>
+    </select>
+  </div> -->
+
+  <!-- <mat-form-field style="width: 100%">
+      <mat-label>Choose The Category</mat-label>
+      <mat-select style="width: 100%" [(value)]="selectedOption">
+        <mat-option *ngFor="let cat of categories" [value]="cat.id">
+          {{cat.categoryname}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+  <mat-form-field class="example-full-width">
+    <input matInput class="form-control" required placeholder="Title" maxlength=100  name="title" [(ngModel)]="note.title">
+  </mat-form-field>
+
+<mat-form-field class="example-full-width">
+    <input matInput class="form-control" required placeholder="Description" maxlength=150  name="description" [(ngModel)]="note.description">
+  </mat-form-field> -->
+
+  <!-- <div name="text" [(ngModel)]="note.text" [froalaEditor]="options"></div> -->
+
+  <!-- <angular-editor name="text" [(ngModel)]="note.text" [config]="editorConfig"></angular-editor> -->
+
+
+  <div class="articleEditor">
+
+    <div id="editor-js" name="text"></div>
+
+  </div>
+
+  <br>
+
+  <!-- <div class="row">
+      &nbsp;&nbsp;&nbsp;
+      <button (ngSubmit)="onSubmit()" [routerLink]="['/usernotes']" routerLinkActive="active"
+        (click)="openSnackBar()" aria-label="Show an example snack-bar" mat-raised-button>Post </button>
+
+      <button type="button" *ngIf="note.isDraft" style="margin-left: 5%" (click)="SaveDraft()"
+       [routerLink]="['/usernotes']" routerLinkActive="active" mat-raised-button>Draft </button>
+
+  </div> -->
+  <div class="row">
+      &nbsp;&nbsp;&nbsp;
+        <button class="action_btn" (ngSubmit)="onSubmit()"  mat-raised-button>
+          Post </button>
+        <!-- <button class="action_btn" [routerLink]="['/usernotes']" routerLinkActive="active"
+         type="button" (click)="SaveDraft()" mat-raised-button>
+          Draft </button> -->
+  </div>
+
+</form>
+
+
+
+
+

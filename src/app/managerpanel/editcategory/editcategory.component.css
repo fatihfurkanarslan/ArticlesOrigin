@@ -1,0 +1,42 @@
+/*
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > input {
+  width: 100%;
+}
+
+.button {
+  margin-left: 42%;
+  margin-right: 42%;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+} */
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-card {
+  max-width: 50%;
+  margin-left: 25%;
+}
+
+.center {
+  margin-left: 45%;
+}
+
+.centerphoto {
+  margin-left: 37%;
+}
+

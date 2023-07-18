@@ -1,0 +1,13 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > input {
+  width: 100%;
+}
+
+.action_btn {
+  width: auto;
+  margin: 0 auto;
+ }

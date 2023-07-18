@@ -1,0 +1,42 @@
+
+ div {
+  border-color: white;
+  text-align: left;
+  cursor: pointer;
+}
+
+img {
+object-fit: cover;
+object-position: center;
+height: auto;
+width: 95%;
+border: 0;
+}
+
+.aaa:hover {
+  opacity: 0.8;
+}
+
+
+/* #content {
+  color: #AAAAAA;
+  font-size: 14px;
+} */
+
+/* #title {
+  color: 333745;
+  font-size: 16px;
+} */
+
+/* .right {
+  text-align: right;
+  font-size: 14px;
+  color: #AAAAAA;
+} */
+
+
+/* .left {
+  text-align: left;
+  font-size: 14px;
+  color: #404040;
+} */

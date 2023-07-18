@@ -1,1 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/*@import '../node_modules/font-awesome/scss/font-awesome.scss'; */
+/* @import '../node_modules/@ngx-share/button/themes/default/default-theme.css'; */
+
+
+
+
+
+div {
+  font-family: 'Libre Baskerville', serif;
+}
+
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.imageback {
+  /* background-image: url('https://cdn.photographypro.com/wp-content/uploads/2018/01/black-and-white-photography-city-fog@2x.jpg'); */
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.mat-mdc-text-field-wrapper.mdc-text-field.ng-tns-c33-0 {
+  background-color: transparent !important;
+}
+
+.mat-mdc-text-field-wrapper.mdc-text-field.ng-tns-c33-0.mdc-text-field--focused {
+  background-color: transparent !important;
+}
+
+.mat-mdc-form-field-infix.ng-tns-c33-0 {
+  padding: 0 !important;
+  min-height: auto !important;
+
+}
+
+.mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align.ng-tns-c33-0{
+display: none;
+}

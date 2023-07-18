@@ -1,0 +1,17 @@
+.example-full-width {
+  width: 100%;
+}
+
+.example-card {
+  max-width: 40%;
+  text-align: center;
+  margin: auto;
+}
+
+/* .center {
+  margin-left: 45%;
+} */
+
+/* .centerphoto {
+  margin-left: 37%;
+} */

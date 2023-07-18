@@ -1,0 +1,99 @@
+<div class="note-container">
+  <div class="title-container">
+    <h1 class="note-title">{{ note?.title }}</h1>
+  </div>
+  <br>
+  <br>
+  <div class="ce-block">
+    <div class="ce-block__content">
+      <ng-container [ngSwitch]="b?.type" *ngFor="let b of toBeParsedData?.blocks">
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+          <div fxFlex="92">
+            <!-- Paragraph -->
+            <div *ngSwitchCase="'paragraph'" class="ce-paragraph cdx-block" [innerHTML]="b?.data?.text"></div>
+  
+            <!-- Header -->
+            <div style="height: fit-content;" *ngSwitchCase="'header'"
+              [innerHTML]="'<h' + b?.data?.level + ' class=ce-header' + '>' + b?.data?.text + '</h' + b?.data?.level + '>'"></div>
+  
+            <!-- Raw -->
+            <div *ngSwitchCase="'raw'" class="ce-raw cdx-block">
+              <div class="code-block">
+                <pre><code [innerHTML]="b?.data?.html"></code></pre>
+              </div>
+            </div>
+  
+            <!-- Image / Video -->
+            <div *ngSwitchCase="'image'">
+              <div class="cdx-block image-tool image-tool--filled" *ngIf="b?.data?.file?.url">
+                <div class="image-tool__image">
+                  <ng-container>
+                    <img class="image-tool__image-picture" [src]="b?.data?.file?.url">
+                    <div style="text-align: center; margin-top: 5px;" [innerHTML]="b?.data?.caption"></div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="parent-element">
+  <div class="glories" style="flex: 1;">
+    <button mat-fab style="background-color: white" (click)="increaseLike()">
+      <mat-icon style="color:#1F4E5F">favorite</mat-icon>
+    </button>
+    <mat-label style="margin-left: 20px">{{note?.likes?.length}} glories</mat-label>
+  </div>
+
+  <div class="tags">
+    <mat-label class="tag">
+      <button class="tagbutton" style="margin:5px;" aria-label="Show an example snack-bar"
+        (click)="searchNotes(tag.tags)" *ngFor="let tag of tags" mat-stroked-button color="primary">{{tag?.tags}}
+      </button>
+    </mat-label>
+  </div>
+</div>
+<br>
+<br>
+<br>
+<div class="comment-container">
+
+<span *ngFor="let comment of commentsArray">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{ authService.decodedToken?.unique_name }}</mat-card-title>
+      <mat-card-subtitle>{{ comment.onCreated | date:'mediumDate' }}</mat-card-subtitle>
+    </mat-card-header>
+    <div class="row">
+      <div class="col-md-10">
+        <mat-card-content>
+          <p [innerHTML]="comment.text"></p>
+        </mat-card-content>
+      </div>
+      <div class="col-md-2">
+        <button (click)="deleteComment(comment.id)" mat-icon-button>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card>
+  <br>
+</span>
+
+<div *ngIf="token">
+  <form [formGroup]="form" (ngSubmit)="makeComment()">
+    <mat-form-field class="example-full-width" style="width: 100%" >
+      <input matInput formControlName="Text" required placeholder="Write A Comment" name="text"
+        [(ngModel)]="commentModel.text">
+    </mat-form-field>
+    <br>
+    <button aria-label="Show an example snack-bar" mat-raised-button>Publish</button>
+  </form>
+</div>
+
+</div>
+

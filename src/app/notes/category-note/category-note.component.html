@@ -1,0 +1,92 @@
+<h2 style="text-align: center">{{categoryName | titlecase}}</h2>
+
+<div *ngFor="let note of notes" [routerLink]="['/note', note.id]" routerLinkActive="active">
+<!-- Section: Blog v.3 -->
+<section class="my-5">
+  <!-- Grid row -->
+  <!-- Grid row -->
+  <div class="row" style="padding-bottom: 10px">
+
+    <!-- Grid column -->
+    <div class="col-lg-3">
+
+      <!-- Featured image -->
+        <img class="aaa" src="{{note.mainPhotourl}}" alt="{{note?.title}}"
+          [routerLink]="['/note', note.id]" routerLinkActive="active">
+        <a>
+          <div class="mask rgba-white-slight"></div>
+        </a>
+    </div>
+    <!-- Grid column -->
+
+    <!-- Grid column -->
+    <div class="col-lg-9">
+      <br>
+      <!-- Category -->
+      <!-- <a href="#!" class="green-text">
+        <h6 class="font-weight-bold mb-3"><mdb-icon fas icon="utensils" class="pr-2"></mdb-icon></h6>
+      </a> -->
+      <!-- Post title -->
+      <h6 class="font-weight-bold mb-3"  [routerLink]="['/note', note.id]" routerLinkActive="active"><strong>{{note.title}}</strong></h6>
+      <!-- font size is minimal -->
+      <div style="font-size: 13px;">
+         <p  [routerLink]="['/note', note.id]" routerLinkActive="active">{{note.description}}</p>
+
+         <div class="d-flex justify-content-between">
+            <div [routerLink]="['/notesbyuser', note.userId]">
+              {{note.onModifiedUsername}}
+            </div>
+            <div>
+                {{note.onModified | date:'mediumDate'}}
+            </div>
+       </div>
+      </div>
+
+    </div>
+    <!-- Grid column -->
+
+  </div>
+  <!-- Grid row -->
+  <!-- Grid row -->
+</section>
+</div>
+
+
+
+<!-- <mat-grid-list cols="2" rowHeight="2:1">
+  <mat-grid-tile *ngFor="let note of notes" [routerLink]="['/note', note.id]" routerLinkActive="active">
+
+    <div class="row">
+      <div class="col-8">
+         <div class="card-body">
+        <h5 id="title"  class="card-title">{{note?.title}}</h5>
+        <p class="card-text" id="content">{{note?.description}}</p>
+      </div>
+      </div>
+      <div class="col-4">
+        <img class="card-img-top img-thumbnail" src="{{note.photos[0]?.photoUrl}}" alt="{{note?.title}}">
+     </div>
+    </div>
+
+  </mat-grid-tile>
+
+</mat-grid-list> -->
+
+<!-- <div class="card"  *ngFor="let note of notes" [routerLink]="['/note', note.id]" routerLinkActive="active">
+  <div class="row">
+  <div class="col-8">
+     <div class="card-body">
+    <h5 id="title"  class="card-title">{{note.title}}</h5>
+    <p class="card-text" id="content">{{note.description}}</p>
+
+  </div>
+  </div>
+</div>
+</div> -->
+
+
+<!-- <ul style="text-align: center">
+  <li *ngFor="let note of notes" [routerLink]="['/note', note.id]" routerLinkActive="active">
+    <app-popular-notes [note]="note"></app-popular-notes>
+  </li>
+</ul> -->

@@ -1,0 +1,25 @@
+<app-category></app-category>
+<div class="row">
+
+  <div class="col-lg-9 col-12" infinite-scroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="100"
+    (scrolled)="onScroll()">
+    <ul style="text-align: left;">
+      <li *ngFor="let note of notes">
+        <app-note-card [note]="note"></app-note-card>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-lg-3">
+    <div class="popularonblog">
+      <p class="populartitle">Popular on ArticlesOrigin</p>
+      <hr>
+      <ul >
+        <li *ngFor="let note of popularNotes" [routerLink]="['/note', note.id] | slice:0:4" routerLinkActive="active">
+          <app-popular-notes [note]="note"></app-popular-notes>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>

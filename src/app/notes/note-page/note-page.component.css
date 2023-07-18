@@ -1,0 +1,83 @@
+
+
+.note-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.note-container .title-container {
+  margin-bottom: 20px;
+}
+
+.note-container .note-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.note-container .ce-block {
+  margin-bottom: 20px;
+}
+
+.note-container .ce-paragraph {
+  margin-bottom: 10px;
+}
+
+.note-container .ce-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.note-container .ce-raw {
+  background-color: #f5f5f5;
+  color: #333;
+  font-size: 18px;
+  margin: auto;
+  width: 60vw;
+}
+
+.note-container .image-tool {
+  margin-bottom: 10px;
+}
+
+.note-container .image-tool__image-picture {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.note-container .image-tool__image-picture + div {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.parent-element {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.parent-element .tags {
+  margin-left: auto;
+}
+
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 20px auto;
+  max-width: 80%;
+  }
+
+  .comment-container > .ng-star-inserted {
+    width: 60%;
+  }

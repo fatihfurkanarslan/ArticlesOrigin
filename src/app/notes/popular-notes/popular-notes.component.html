@@ -1,0 +1,16 @@
+<div class="card">
+
+    <h5  id="title"  class="card-title" style="text-align: auto; font-size: 13px;">{{note.title}}</h5>
+
+    <div class="d-flex justify-content-between bottomline">
+        <div [routerLink]="['/notesbyuser', note.userId]">
+          {{note.onModifiedUsername}}
+        </div>
+        <div>
+            {{note.onModified | date:'mediumDate'}}
+        </div>
+   </div>
+
+
+</div>
+

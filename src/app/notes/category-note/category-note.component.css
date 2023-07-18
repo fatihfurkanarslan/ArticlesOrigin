@@ -1,0 +1,44 @@
+/*
+div {
+  border-color: white;
+  text-align: center;
+}
+
+img {
+object-fit: cover;
+object-position: center;
+height: 175px;
+width: 175px;
+}
+
+#content {
+  color: #AAAAAA;
+  font-size: 14px;
+}
+
+#title {
+  color: 333745;
+  font-size: 16px;
+}
+
+.right {
+  text-align: right;
+  font-size: 14px;
+  color: #AAAAAA;
+}
+
+
+.left {
+  text-align: left;
+  font-size: 14px;
+  color: #404040;
+} */
+
+
+img {
+  object-fit: cover;
+  object-position: center;
+  height: 200px;
+  width: 200px;
+  border: 0;
+  }

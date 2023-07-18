@@ -1,0 +1,21 @@
+ul
+{
+text-align: center;
+background-color: white;
+}
+
+ul li
+{
+  display: inline;
+  margin-right: 5%;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  padding: 10px;
+  font-size: 20px;
+}

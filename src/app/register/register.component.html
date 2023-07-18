@@ -1,0 +1,75 @@
+<!-- 
+ <mat-card class="image">
+    <mat-card-title>Register</mat-card-title>
+
+    <p>
+      <span style="color:#a3132b" matBadge="4" matBadgeOverlap="false" *ngIf="errorMessage" [innerHTML]="errorMessage"></span>
+    </p>
+    <p>
+      <span style="color:#10854a" matBadge="4" matBadgeOverlap="false" *ngIf="successMessage" [innerHTML]="successMessage"></span>
+    </p>
+  <br>
+<mat-card-content>
+<form [formGroup]="form" (ngSubmit)="register()">
+  <p>
+    <mat-form-field>
+      <input type="text" maxlength=20 matInput placeholder="Username" formControlName="username" [(ngModel)]="model.username" name="username" required>
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field>
+      <input type="text" maxlength=30 matInput placeholder="Email" formControlName="username"
+       required [(ngModel)]="model.email" name="email">
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field>
+      <input type="password" maxlength=20 matInput placeholder="Password" formControlName="password"
+       [(ngModel)]="model.password" name="password" required>
+    </mat-form-field>
+  </p>
+
+  <div class="button">
+    <button type="submit" mat-button>Register</button>
+    <button type="button" mat-button [routerLink]="['/home']" routerLinkActive="active">Cancel</button>
+  </div>
+
+</form>
+</mat-card-content>
+</mat-card> -->
+
+
+
+<div class="container" id="container">
+	<div class="form-container sign-in-container">
+    <p>
+      <span style="color:#a3132b" matBadge="4" matBadgeOverlap="false" *ngIf="errorMessage" [innerHTML]="errorMessage"></span>
+    </p>
+    <p>
+      <span style="color:#10854a" matBadge="4" matBadgeOverlap="false" *ngIf="successMessage" [innerHTML]="successMessage"></span>
+    </p>
+		<form [formGroup]="form" (ngSubmit)="register()">
+			<h1>Sign up</h1>
+      <br>
+      <input type="text" maxlength=20 matInput placeholder="Username" formControlName="username" 
+      [(ngModel)]="model.username" name="username" required>
+
+			<input type="text" maxlength=30 matInput placeholder="Email" formControlName="username"
+       required [(ngModel)]="model.email" name="email">
+
+       <input type="password" maxlength=20 matInput placeholder="Password" formControlName="password"
+       [(ngModel)]="model.password" name="password" required>
+
+       <div class="terms-checkbox">
+        <mat-checkbox formControlName="termsAgreed" required>By clicking Sign Up, you agree to the <a (click)="openUserAgreement()">User Agreement</a></mat-checkbox>
+      </div>
+		<br>
+       <div class="button">
+        <button type="submit">Sign Up</button>
+      </div>
+		</form>
+	</div>
+	
+</div>
