@@ -44,10 +44,10 @@ insertComment(comment: Comment): Observable<Comment> {
 }
 
 deleteComment(commentId: number): Observable<Comment> {
-  return this.http.delete<Comment>(this.apiUrl + 'delete/' + commentId, httpOptions);
+  return this.http.post<Comment>(this.apiUrl + 'delete/' + commentId, httpOptions);
 }
 
 updateComment(comment: Comment): Observable<Comment> {
-  return this.http.put<Comment>(this.apiUrl + 'update', comment);
+  return this.http.post<Comment>(this.apiUrl + 'update', comment, httpOptions);
 }
 }

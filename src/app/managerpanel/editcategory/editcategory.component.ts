@@ -54,7 +54,7 @@ export class EditcategoryComponent implements OnInit {
     // console.log(this.selectedFile);
     this.data.append('File', this.selectedFile);
 
-    axios.post('https://localhost:44369/api/photo/insertphotonote', this.data, {
+    axios.post(this.baseUrl + 'photo/insertphotonote', this.data, {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'multipart/form-data'

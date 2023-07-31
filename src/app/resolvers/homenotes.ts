@@ -8,11 +8,12 @@ import { NoteService } from '../services/note.service';
 @Injectable()
 export class HomeNotes implements Resolve<Note[]> {
 
-  pageNumber: number = 1;
+  //pageNumber: number = 1;
     constructor(private noteService: NoteService, private router: Router) {}
 
-    resolve(route: ActivatedRouteSnapshot, pageNumber: any): Observable<Note[]> {
-        return this.noteService.getNotesWithScroll(this.pageNumber).pipe(
+    resolve(route: ActivatedRouteSnapshot): Observable<Note[]> {
+        const pageNumber = route.queryParams['pageNumber'];
+        return this.noteService.getNotesWithScroll(pageNumber).pipe(
             catchError(error => {
                 console.log('note resolver fail');
                 this.router.navigate(['/home']);

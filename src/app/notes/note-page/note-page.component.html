@@ -50,18 +50,21 @@
 
   <div class="tags">
     <mat-label class="tag">
-      <button class="tagbutton" style="margin:5px;" aria-label="Show an example snack-bar"
-        (click)="searchNotes(tag.tags)" *ngFor="let tag of tags" mat-stroked-button color="primary">{{tag?.tags}}
+      <button *ngFor="let tag of note?.tags" mat-stroked-button color="primary"
+        class="tagbutton" style="margin:5px;" aria-label="Show an example snack-bar"
+        (click)="searchNotes(tag.tags)">
+        {{ tag.tags }}
       </button>
     </mat-label>
   </div>
 </div>
 <br>
+
 <br>
 <br>
 <div class="comment-container">
 
-<span *ngFor="let comment of commentsArray">
+<span *ngFor="let comment of commentsArray$ | async">
   <mat-card class="example-card">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>

@@ -42,7 +42,7 @@ deleteCategory(categoryId: number): Observable<Category> {
 }
 
 updateCategory(category: FormData): Observable<Category> {
-  return this.http.put<Category>(this.apiUrl + 'update', category, httpOptionsFormData);
+  return this.http.post<Category>(this.apiUrl + 'update', category, httpOptionsFormData);
 }
 
 }

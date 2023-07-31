@@ -88,7 +88,7 @@ export class EditnoteComponent implements OnInit {
                 data.append('MainPhoto', 'false');
 
                 console.log('file -->' + file);
-                return axios.post('https://localhost:44369/api/photo/insertphotonote', data, {
+                return axios.post('http://api.articlesorigin.com/api/photo/insertphotonote', data, {
                   headers: {
                     'accept': 'application/json',
                     'Content-Type': 'multipart/form-data'
@@ -110,7 +110,7 @@ export class EditnoteComponent implements OnInit {
                 data.append('MainPhoto', 'false');
 
                 console.log('url -->' + url);
-                return this.httpClient.post('https://localhost:44369/api/photo/insertphotonote', data, {
+                return this.httpClient.post('http://api.articlesorigin.com/api/photo/insertphotonote', data, {
                   headers: {
                     'accept': 'application/json',
                     'Content-Type': 'multipart/form-data'

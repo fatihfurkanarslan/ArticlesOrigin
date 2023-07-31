@@ -13,6 +13,7 @@ import { Like } from './../../models/like';
 import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { ArrayFixPipe } from 'src/app/array-fix.pipe';
 import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 
 
 
@@ -28,22 +29,22 @@ export class NotePageComponent implements OnInit {
 
   commentModel: any = {};
   likeModel: any = {};
-  id!: number;
+  id: number;
   userId!: number;
 
   form: FormGroup = new FormGroup({
     Text: new FormControl(''),
   });
   private sub: any;
-  note!: Note;
+  note: Note = null;
 
-  commentsArray!: Comment[];
+  commentsArray$: Observable<Comment[]>; // Change the variable name and add the "$" suffix
   likes!: Like[];
   likeCount = 0;
 
   commentToInsert!: Comment;
 
-  tags!: Tag[];
+  tagsToPrint: string[];
 
   htmlCode!: SafeHtml;
   toBeParsedData: any;
@@ -61,32 +62,47 @@ export class NotePageComponent implements OnInit {
 
       this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
+      console.log("note id  " + this.id);
       });
 
 this.noteService.getNote(this.id).subscribe((data: Note) => {
   this.note = data;
   this.toBeParsedData = JSON.parse(this.note.rawText);
+  //this.tags$ = this.tagService.getTags(this.id);
   //this.htmlCode = this.domSanitizer.bypassSecurityTrustHtml(this.note.text);
  },
   error => console.log('failed note get method'));
 
-// this.tagService.getTags(this.id).subscribe(result => {this.tags = result; },
-//   error => {
-// console.log('tag service failed ');
-//   });
 
 
-    this.commentService.getComments(+this.id).subscribe((commentList: Comment[]) => {
-      console.log("in comment service");
-      this.commentsArray = commentList;
-     },
-    error => {
-      console.log('comment service failed');
-    });
+
+    // this.commentService.getComments(this.id).subscribe((commentList: Comment[]) => {
+    //   console.log("note id  " + this.id);
+    //   console.log("in comment service");
+    //   this.commentsArray = commentList;
+    //  },
+    // error => {
+    //   console.log('comment service failed');
+    // });
+    console.log("note id 2 " + this.id);
+
+    
+    this.commentsArray$ = this.commentService.getComments(this.id).pipe(map((comments: Comment[]) =>     
+          comments.filter(comment => comment.deleted === false))
+    );
+     
   }
 
   onSubmit() {
-    this.commentService.updateComment(this.commentToInsert).subscribe(result => { console.log('successed'); },
+
+   
+    this.commentService.updateComment(this.commentToInsert).subscribe(result => { 
+      this.commentsArray$ = this.commentService.getComments(this.id).pipe(
+        map((comments: Comment[]) => 
+          //console.log(comments.filter(comment => comment.deleted === false));
+          comments.filter(comment => comment.deleted === false))
+      );
+    },
     error => console.log('failed') );
   }
 
@@ -96,7 +112,8 @@ this.noteService.getNote(this.id).subscribe((data: Note) => {
     this.userId = this.authService.decodedToken.nameid;
 
     this.httpClient.get("http://api.ipify.org/?format=json").subscribe((res:any)=>{
-      this.commentModel.IPAddress = ""+res.ip;
+      //db'de ipaddress columnu oluşturmak gerekli
+      //this.commentModel.IPAddress = ""+res.ip;
       console.log("idadress : " + this.commentModel.IPAddress);
 
       this.commentModel.userId = this.userId;
@@ -104,10 +121,13 @@ this.noteService.getNote(this.id).subscribe((data: Note) => {
   
       this.commentService.insertComment(this.commentModel).subscribe(result => {
         console.log('success to insert comment :' + result);
-        this.noteService.getNote(+this.id).subscribe((data: Note) => {
-          this.note = data; 
-        }, 
-        error => console.log('failed note get method'));
+        // this.noteService.getNote(+this.id).subscribe((data: Note) => {
+        //   this.note = data; 
+        // }, 
+        // error => console.log('failed note get method'));
+        this.commentsArray$ = this.commentService.getComments(this.id).pipe(
+          map((comments: Comment[]) => {return comments.filter(comment => comment.deleted === false)})
+        );
         this.commentModel.text = '';
       }, error => {
         console.log('failed to insert comment :' + error);
@@ -137,12 +157,15 @@ this.noteService.getNote(this.id).subscribe((data: Note) => {
   deleteComment(commentId: number){
     this.commentService.deleteComment(commentId).subscribe(result => {
       console.log('comment id ' + commentId);
-      this.commentService.getComments(+this.id).subscribe((commentList: Comment[]) => {
-        console.log("in comment service in deletecomment func");
-        this.commentsArray = commentList; },
-    error => {
-      console.log('comment service failed');
-    });
+    //   this.commentService.getComments(+this.id).subscribe((commentList: Comment[]) => {
+    //     console.log("in comment service in deletecomment func");
+    //     this.commentsArray = commentList; },
+    // error => {
+    //   console.log('comment service failed');
+    // });
+     this.commentsArray$ = this.commentService.getComments(this.id).pipe(
+      map((comments: Comment[]) => {return comments.filter(comment => comment.deleted === false)})
+    );
     })
   }
 

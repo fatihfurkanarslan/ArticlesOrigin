@@ -53,15 +53,15 @@ export class NoteService {
   }
 
   deleteNote(noteId: number): Observable<Note> {
-    return this.http.delete<Note>(this.apiUrl + 'delete/' + noteId, httpOptions);
+    return this.http.post<Note>(this.apiUrl + 'delete/' + noteId, httpOptions);
   }
 
   updateNote(note: Note): Observable<Note> {
-    return this.http.put<Note>(this.apiUrl + 'update', note, httpOptions);
+    return this.http.post<Note>(this.apiUrl + 'update', note, httpOptions);
   }
 
   updateNoteImage(note: Note): Observable<Note> {
-    return this.http.put<Note>(this.apiUrl + 'updateImage', note, httpOptions);
+    return this.http.post<Note>(this.apiUrl + 'updateImage', note, httpOptions);
   }
 
   draftNote(note: Note): Observable<Note> {

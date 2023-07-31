@@ -1,4 +1,5 @@
 export const environment = {
-  production: true,
-  apiUrl: 'http://185.153.221.220:81/api/'
-};
+    production: true,
+    apiUrl: 'http://api.articlesorigin.com/api/'
+    //apiUrl: 'https://localhost:44369/api/'
+  }

@@ -1,6 +1,7 @@
 import { Photo } from './photo';
 import { Comment } from './comment';
 import { Like } from './like';
+import { Tag } from './tag';
 
 export class Note {
 
@@ -19,6 +20,6 @@ export class Note {
   IPAddress:string;
   photos: string[];
   comments: Comment[];
-  tags: string[];
+  tags: Tag[];
   likes: Like[];
 }

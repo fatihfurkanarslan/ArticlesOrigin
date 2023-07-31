@@ -65,27 +65,24 @@ export class CreatetagsComponent implements OnInit {
     this.noteId = localStorage.getItem('editNoteId');
     this.tag.noteId = +this.noteId;
     this.tag.tags = this.tagList;
-
-    console.log("editnoteid " + this.noteId)
-
-    this.tagService.insertTag(this.tag).subscribe(result => {
-      console.log('basarılı bir tag ekleme');
-      // this.router.navigate(['/usernotes']);
-    }, error => {
-      console.log('basarısız bir tag ekleme');
-    });
-
     //console.log("User id " + this.noteId)
     this.note.mainPhotourl = this.photoUrl;
     this.note.id = +this.noteId;
     this.note.categoryId = this.selectedOption;
-    
 
-    this.noteService.updateNoteImage(this.note).subscribe(result => {
-      this.router.navigate(['/usernotes']);
+    console.log("editnoteid " + this.noteId)
+
+    this.tagService.insertTag(this.tag).subscribe(result => {
+      this.noteService.updateNoteImage(this.note).subscribe(result => {
+        this.router.navigate(['/usernotes']);
+      }, error => {
+        console.log(error);
+      });
     }, error => {
-      console.log(error);
+      console.log('basarısız bir tag ekleme');
     });
+
+
   }
 
   onFileSelected(event: any) {
@@ -94,7 +91,7 @@ export class CreatetagsComponent implements OnInit {
     // console.log(this.selectedFile);
     this.data.append('File', this.selectedFile);
 
-    axios.post('https://localhost:44369/api/photo/insertphotonote', this.data, {
+    axios.post('http://api.articlesorigin.com/api/photo/insertphotonote', this.data, {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'multipart/form-data'

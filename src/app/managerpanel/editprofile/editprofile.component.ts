@@ -7,6 +7,7 @@ import { PhotobarComponent } from 'src/app/photobar/photobar.component';
 import { PhotoService } from './../../services/photo.service';
 import axios from 'axios';
 import { ErrorphotobarComponent } from 'src/app/errorphotobar/errorphotobar.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-editprofile',
@@ -22,6 +23,7 @@ export class EditprofileComponent implements OnInit {
   durationInSeconds = 3;
   data = new FormData();
   photoUrl: string;
+  baseUrl = environment.apiUrl;
 
   constructor(private profileService: ProfileService, private _snackBar: MatSnackBar,
      private authService: AuthService, private photoService: PhotoService) {
@@ -51,7 +53,7 @@ export class EditprofileComponent implements OnInit {
     // console.log(this.selectedFile);
     this.data.append('File', this.selectedFile);
 
-    axios.post('https://localhost:44369/api/photo/insertphotonote', this.data, {
+    axios.post(this.baseUrl + 'api/photo/insertphotonote', this.data, {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'multipart/form-data'

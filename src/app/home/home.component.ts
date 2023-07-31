@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
 
 notes: Note[] = [];
 popularNotes: Note[] = [];
-pageNumber: any;
+pageNumber: number = 1;
 
   constructor(private noteService: NoteService, private route: ActivatedRoute) {
    }

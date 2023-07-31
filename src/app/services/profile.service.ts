@@ -52,7 +52,7 @@ export class ProfileService {
   updateUser(user: User): Observable<User> {
 
     
-    return this.http.put<User>(this.apiUrl + 'update', user, httpOptions).pipe(
+    return this.http.post<User>(this.apiUrl + 'update', user, httpOptions).pipe(
       map((response: User) => {
         // tslint:disable-next-line:prefer-const
 

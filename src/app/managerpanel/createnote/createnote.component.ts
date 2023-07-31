@@ -25,6 +25,8 @@ import { untilDestroyed } from '@ngneat/until-destroy';
 
 import { debounce } from 'lodash';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Tag } from 'src/app/models/tag';
 
 
 @Component({
@@ -43,7 +45,7 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:no-inferrable-types
   fired: boolean = false;
 
-  tagList: string[] = [];
+  tagList: Tag[] = [];
 
   editor: any;
 
@@ -56,6 +58,7 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
   savingEditor: boolean = false;
   //autosaving
 
+  baseUrl = environment.apiUrl;
 
   constructor(private noteService: NoteService,
      private authService: AuthService,
@@ -224,7 +227,7 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
               data.append('MainPhoto', 'false');
 
               console.log('file -->' + file);
-              return axios.post('https://localhost:44369/api/photo/insertphotonote', data, {
+              return axios.post('http://api.articlesorigin.com/api/photo/insertphotonote', data, {
                 headers: {
                   'accept': 'application/json',
                   'Content-Type': 'multipart/form-data'
@@ -255,7 +258,7 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
                data.append('MainPhoto', 'false');
 
                console.log('url -->' + url);
-               return axios.post('https://localhost:44369/api/photo/insertphotonote', data, {
+               return axios.post('http://api.articlesorigin.com/api/photo/insertphotonote', data, {
                  headers: {
                    'accept': 'application/json',
                    'Content-Type': 'multipart/form-data'
@@ -416,18 +419,7 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
        this.imageList.push(images[i].toString());
      }
 
-     //this.saveEditorData();
-
-   // console.log(this.tagList + ' fskdfs');
-
-    // $('img').map();
-    // this.imageList.push($('img').prop('src'));
-    // for (let i = 0; i < imgArray.length; i++) {
-    //   this.noteToInsert.photos[i] = imgArray[i];
-    //     }
-    // console.log('photooo ' + this.noteToInsert.photos[0]);
-    // this.noteToInsert.photos.push();
-    //this.noteToInsert.categoryId = this.selectedOption;
+   
     this.noteToInsert.userId = this.userId;
      this.noteToInsert.photos = this.imageList;
      this.noteToInsert.isDraft = false;
@@ -437,12 +429,8 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
 
      this.noteToInsert.id = +noteId;
 
-     console.log("this.noteToInsert.text = " + this.HtmlData);
+     console.log("this.noteToInsert = " + this.noteToInsert);
 
-    //  console.log("*editordata : " + this.editorData);
-
-    //  console.log("*parseddata : " + this.parsedData);
-   // console.log('tags : ' + this.tags);
 
     this.noteService.updateNote(this.noteToInsert).subscribe(data => {
       console.log('success to update note');

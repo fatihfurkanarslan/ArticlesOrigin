@@ -32,7 +32,7 @@ insertLike(like: Like): Observable<Like> {
 }
 
 deleteLike(categoryId: number): Observable<Like> {
-  return this.http.delete<Like>(this.apiUrl + 'delete/' + categoryId, httpOptions);
+  return this.http.post<Like>(this.apiUrl + 'delete/' + categoryId, httpOptions);
 }
 
 

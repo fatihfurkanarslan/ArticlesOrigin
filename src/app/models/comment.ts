@@ -4,4 +4,5 @@ export class Comment {
   onCreated: string;
   onModifiedUsername: string;
   IPAddress: string;
+  deleted: boolean;
 }
