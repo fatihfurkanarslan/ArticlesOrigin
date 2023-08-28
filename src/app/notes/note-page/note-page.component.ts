@@ -14,6 +14,18 @@ import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
 import { ArrayFixPipe } from 'src/app/array-fix.pipe';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { faTwitter, faInstagram, faFacebook, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
+
+import jwt_decode from 'jwt-decode';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Followmodel } from 'src/app/models/followmodel';
+import { FollowService } from 'src/app/services/follow.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { User } from 'src/app/models/user';
+import { MatDialog } from '@angular/material/dialog';
+import { ShareModalComponent } from 'src/app/Utils/share-modal/share-modal.component';
+import { ClipboardService } from 'ngx-clipboard';
 
 
 
@@ -25,7 +37,12 @@ import { Observable, map } from 'rxjs';
 })
 export class NotePageComponent implements OnInit {
 
-
+  twitterIcon = faTwitter;
+  instagramIcon = faInstagram;
+  facebookIcon = faFacebook;
+  whatsappIcon = faWhatsapp;
+  linkIcon = faLink;
+  currentUrl: string;
 
   commentModel: any = {};
   likeModel: any = {};
@@ -50,48 +67,55 @@ export class NotePageComponent implements OnInit {
   toBeParsedData: any;
   token: any;
 
+  jwtHelper = new JwtHelperService();
+
+  followerModel!: Followmodel;
+  decodedToken: any;
+  followerId: string = '';
+  followeeId: string = '';
+ 
+  followBtnText: string = "follow";
+  followInfo: any;
+
+  isCopied: boolean = false;
+
   constructor(private route: ActivatedRoute, private noteService: NoteService,
      private commentService: CommentService, public authService: AuthService,
-   private router: Router, private tagService: TagService, private likeService: LikeService, private domSanitizer: DomSanitizer,  private httpClient: HttpClient) {
+   private router: Router, private dialog: MatDialog, private likeService: LikeService,
+    private domSanitizer: DomSanitizer,  private httpClient: HttpClient, private followService : FollowService
+    ,private profilService: ProfileService, private clipboardApi: ClipboardService) {
       this.token = null;
     }
 
   ngOnInit() {
-
       this.token = localStorage.getItem('token');
 
+      this.currentUrl = window.location.href;
       this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
-      console.log("note id  " + this.id);
       });
 
+      
 this.noteService.getNote(this.id).subscribe((data: Note) => {
   this.note = data;
   this.toBeParsedData = JSON.parse(this.note.rawText);
-  //this.tags$ = this.tagService.getTags(this.id);
-  //this.htmlCode = this.domSanitizer.bypassSecurityTrustHtml(this.note.text);
+  // this.profilService.getProfile(this.note.userId).subscribe((user: User) => 
+  // this.followInfo = user.followInfo
+  // ) ;
+  // console.log( "follow info : " + this.followInfo);
+
  },
   error => console.log('failed note get method'));
 
 
-
-
-    // this.commentService.getComments(this.id).subscribe((commentList: Comment[]) => {
-    //   console.log("note id  " + this.id);
-    //   console.log("in comment service");
-    //   this.commentsArray = commentList;
-    //  },
-    // error => {
-    //   console.log('comment service failed');
-    // });
-    console.log("note id 2 " + this.id);
-
-    
     this.commentsArray$ = this.commentService.getComments(this.id).pipe(map((comments: Comment[]) =>     
           comments.filter(comment => comment.deleted === false))
     );
+
      
   }
+
+
 
   onSubmit() {
 
@@ -168,6 +192,95 @@ this.noteService.getNote(this.id).subscribe((data: Note) => {
     );
     })
   }
+
+  // openShareModal(platform: string) {
+  //   console.log('platform nedir : ' + platform)
+  //   if (platform === 'whatsapp') {
+  //     //const currentUrl = window.location.href; // Mevcut sayfanın URL'sini al
+  //     const whatsappUrl = `whatsapp://send?text=${encodeURIComponent(this.currentUrl)}`;
+  //     console.log('whatsappurlll : ' + whatsappUrl)
+  //     window.open(whatsappUrl, '_blank'); // Yeni pencerede WhatsApp aç
+  //   } else {
+  //     const dialogRef = this.dialog.open(ShareModalComponent, {
+  //       data: { platform, noteId: this.note.id }
+  //     });
+  
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       // Handle modal close event if needed
+  //     });
+  //   }
+  // }
+
+  shareOnTwitter(){
+    const twitterUrl = `https://twitter.com/share?url=${encodeURIComponent(this.currentUrl)}`;
+
+    window.open(twitterUrl, '_blank'); 
+  }
+
+  shareOnFacebook(){
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(this.currentUrl)}`;
+    window.open(facebookUrl, '_blank'); 
+  }
+
+  shareOnWhatsapp(){
+    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(this.currentUrl)}`;
+     
+      window.open(whatsappUrl, '_blank'); 
+  }
+  
+  copyUrlToClipboard() {
+    this.clipboardApi.copy(this.currentUrl); // URL'yi panoya kopyala
+    this.isCopied = true; // Copied yazısını göster
+
+    // Belirli bir süre sonra "Copied" yazısını gizle
+    setTimeout(() => {
+      this.isCopied = false;
+    }, 2000); // Örneğin, 2 saniye sonra gizle
+  }
+
+
+  // FollowWriter(element: any, item: any){
+  //   //getting user info
+  //   let token = localStorage.getItem('token');
+  //   this.decodedToken = this.jwtHelper.decodeToken(token as string);
+  //   this.followerId = this.decodedToken.nameid;
+
+  //   this.followerModel = {
+  //   followerId: this.followerId,
+  //   // getting id about followee
+  //   followeeId: item
+  //   };
+
+  //   console.log("followerID " + this.followerId + "followeeID " + item);
+
+  //     if(element.innerText == 'follow'){
+  //       console.log("innerhtml is ok");
+  //           this.followService.followWriter(this.followerModel).subscribe((result : any) => {
+  //             console.log("followservice is ok for unfollow");
+  //       if (result === 1) {
+  //         console.log("followservice is worked with 1");
+  //         element.innerText = "unfollow";
+  //       // this.isFollow  = !this.isFollow;
+  //     }
+  //   },
+  //     error => console.log("followriter func not worked.."));
+  //     }
+  //     if(element.innerText == 'unfollow') {
+  //       console.log("innerhtml is ok for unfollow");
+  //       this.followService.unfollowWriter(this.followerModel).subscribe((result : any) => {
+  //       if (result === 1) {
+  //       element.innerText = "follow";
+  //       // this.isFollow  = !this.isFollow;
+  //       }
+  //     },
+  //       error => console.log("unfollowriter func not worked.."));
+  //     }
+
+
+
+
+
+  // }
 
 
 }

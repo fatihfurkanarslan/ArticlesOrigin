@@ -60,6 +60,10 @@ export class CreatetagsComponent implements OnInit {
     });
   }
 
+  onCategorySelectionChange(value: any){
+    this.selectedOption = value;
+  }
+
   onSubmit() {
 
     this.noteId = localStorage.getItem('editNoteId');
@@ -69,6 +73,7 @@ export class CreatetagsComponent implements OnInit {
     this.note.mainPhotourl = this.photoUrl;
     this.note.id = +this.noteId;
     this.note.categoryId = this.selectedOption;
+    this.note.isDraft = false;
 
     console.log("editnoteid " + this.noteId)
 
@@ -91,7 +96,7 @@ export class CreatetagsComponent implements OnInit {
     // console.log(this.selectedFile);
     this.data.append('File', this.selectedFile);
 
-    axios.post('http://api.articlesorigin.com/api/photo/insertphotonote', this.data, {
+    axios.post('https://api.articlesorigin.com/api/photo/insertphotonote', this.data, {
       headers: {
         'accept': 'application/json',
         'Content-Type': 'multipart/form-data'

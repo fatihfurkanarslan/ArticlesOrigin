@@ -38,37 +38,49 @@ export class UsernotesComponent implements OnInit {
 
       this.draftNotes = new MatTableDataSource(result);
       this.realNotes = new MatTableDataSource(result);
-      console.log(" Im in usernotes ");
+ 
 
 
       this.draftNotes.filterPredicate = (data: any, filter: boolean) => {
-      
-return (data.isDraft === filter);
-};
-this.draftNotes.filter = true;
+        return (data.isDraft === filter);
+      };
+      this.draftNotes.filter = true;
 
-this.realNotes.filterPredicate = (data: any, filter: boolean) => {
-  return (data.isDraft !== filter);
-  };
-  this.realNotes.filter = true;
+      this.realNotes.filterPredicate = (data: any, filter: boolean) => {
+        return (data.isDraft !== filter);
+      };
+      this.realNotes.filter = true;
 
-      // this.dataSrc = new MatTableDataSource(result);
-    //   result.forEach(eachObj => {
-    //     if (eachObj.isDraft === true){
-    //         this.draftNotes.push(eachObj);
-    //     }
-    //     if (eachObj.isDraft === false){
-    //       this.realNotes.push(eachObj);
-    //     }
-    // });
- // this.dataSrc = result;
-       result.forEach( x => {
-          if(x.title == null){    
-              //regex e bak       
-              //x.text.replace(/(<p>)|(</p>)|(<header>)|(</header>)/g/, '');
-              x.title = x.text;        
-          }         
-        })
+    
+      result.forEach(receviedNote => {
+        if (receviedNote.title == null) {
+          // İlk öğeyi x.title'a atama
+      // JSON stringi objeye dönüştürme
+      const noteRawText = JSON.parse(receviedNote.rawText);
+
+      // İlk öğeyi x.title'a atama
+      const firstHeaderBlock = noteRawText.blocks.find((block:any) => block.type === "header");
+      if (firstHeaderBlock) {
+        receviedNote.title = firstHeaderBlock.data.text;
+      }else{
+        receviedNote.title = 'No title yet.'
+      }
+
+console.log(receviedNote.title); // "testing"
+
+            // const regex = /<header>(.*?)<\/header>/g;
+            // const matches = [];
+            // let match;
+            
+            // while ((match = regex.exec(x.text))) {
+            //     matches.push(match[1]);
+            // }
+            
+            // if (matches.length > 0) {
+            //     x.title = matches.join(' '); // Header içeriklerini birleştirerek title'a ata
+            // }
+        }
+    });
 
        this.notes = result;
        

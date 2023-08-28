@@ -1,40 +1,9 @@
-/* :host {
-  display: flex;
-  justify-content: center;
-  margin: 100px 0px;
-}
-
-.mat-form-field {
-  width: 300px;
-  min-width: 300px;
-}
-
-mat-card-title,
-mat-card-content {
-  display: flex;
-  justify-content: center;
-}
-
-.error {
-  padding: 16px;
-  width: 300px;
-  color: white;
-  background-color: red;
-}
-
-.button {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.mat-card {
-  opacity: 0.8;
-} */
 
 
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
+/* 
 * {
 	box-sizing: border-box;
 }
@@ -259,4 +228,37 @@ input {
 	height: 40px;
 	width: 40px;
 }
+ */
 
+
+ .login {
+	min-height: 100vh;
+  }
+  
+  .bg-image {
+	background-image: url('https://w0.peakpx.com/wallpaper/1015/87/HD-wallpaper-great-wave-japan-music-boats-old-japanese.jpg');
+	background-size: cover;
+	background-position: center;
+  }
+  
+  .login-heading {
+	font-weight: 300;
+  }
+  
+  .btn-login {
+	font-size: 0.9rem;
+	letter-spacing: 0.05rem;
+	padding: 0.75rem 1rem;
+  }
+  
+
+  .custom_link:hover {
+	color: #888; /* Gri renk */
+  }
+
+  .signinButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* margin-bottom: 20px;  İstediğiniz aralığı ayarlayabilirsiniz */
+  }

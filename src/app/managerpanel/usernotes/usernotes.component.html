@@ -6,7 +6,7 @@
 
                 <ng-container matColumnDef="title">
                   <th mat-header-cell *matHeaderCellDef> Name </th>
-                  <td [routerLink]="['/note', element?.id]" mat-cell *matCellDef="let element" > {{element?.title | slice:0:15}}..</td>
+                  <td [routerLink]="['/note', element?.id]" mat-cell *matCellDef="let element" > {{element?.title | slice:0:20}}..</td>
                 </ng-container>
 
                 <ng-container matColumnDef="onModified">
@@ -43,7 +43,7 @@
               <!-- Position Column -->
               <ng-container matColumnDef="title">
                 <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell [routerLink]="['/note', element?.id]" *matCellDef="let element"> {{element.title}} </td>
+                <td mat-cell [routerLink]="['/note', element?.id]" *matCellDef="let element"> {{element?.title | slice:0:20}} </td>
               </ng-container>
 
               <!-- Name Column -->

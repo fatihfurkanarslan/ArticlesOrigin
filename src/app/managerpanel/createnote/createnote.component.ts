@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, ɵConsole, NgProbeToken, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, ɵConsole, NgProbeToken, SimpleChanges, OnChanges, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { Note } from 'src/app/models/note';
 import * as $ from 'jquery';
 // import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
@@ -36,6 +36,8 @@ import { Tag } from 'src/app/models/tag';
 })
 
 export class CreatenoteComponent implements OnInit, OnDestroy {
+
+  @ViewChild('editorElement', { static: false }) editorElement: ElementRef;
 
   public noteToInsert = new Note();
   userId: any = {};
@@ -227,7 +229,7 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
               data.append('MainPhoto', 'false');
 
               console.log('file -->' + file);
-              return axios.post('http://api.articlesorigin.com/api/photo/insertphotonote', data, {
+              return axios.post('https://api.articlesorigin.com/api/photo/insertphotonote', data, {
                 headers: {
                   'accept': 'application/json',
                   'Content-Type': 'multipart/form-data'
@@ -258,7 +260,7 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
                data.append('MainPhoto', 'false');
 
                console.log('url -->' + url);
-               return axios.post('http://api.articlesorigin.com/api/photo/insertphotonote', data, {
+               return axios.post('https://api.articlesorigin.com/api/photo/insertphotonote', data, {
                  headers: {
                    'accept': 'application/json',
                    'Content-Type': 'multipart/form-data'
@@ -296,6 +298,7 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
       this.noteToInsert.userId = this.userId;
       this.noteToInsert.isDraft = true;
       this.noteToInsert.categoryId = 1;
+      this.noteToInsert.rawText = this.editorData;
       //console.log("localstore getitem worked.." + localStorage.getItem('noteId'));
       this.noteService.draftNote(this.noteToInsert).subscribe(id => {
         this.noteId = id;
@@ -317,35 +320,21 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
 
   //  this.saveEditorData();
 
-    const images = $('img').map(function() {
-      return $(this).attr('src').toString();
-   });
+  const images = this.editorElement.nativeElement.querySelectorAll('img');
+  //const imageList = [];
 
-   for (let i = 0; i < images.length; i++) {
-     this.imageList.push(images[i].toString());
-   }
+  images.forEach((img: HTMLImageElement) => {
+    this.imageList.push(img.src);
 
-  
-  // $('img').map();
-  // this.imageList.push($('img').prop('src'));
-  // for (let i = 0; i < imgArray.length; i++) {
-  //   this.noteToInsert.photos[i] = imgArray[i];
-  //     }
-  // console.log('photooo ' + this.noteToInsert.photos[0]);
-  // this.noteToInsert.photos.push();
-  // this.noteToInsert.categoryId = this.selectedOption;
+  });
+
   this.noteToInsert.userId = this.userId;
   this.noteToInsert.photos = this.imageList;
   this.noteToInsert.isDraft = true;
   this.noteToInsert.id = +noteId;
   this.noteToInsert.text = this.HtmlData;
   this.noteToInsert.rawText = this.editorData;
-
-  //console.log("this.noteToInsert.rawText : " + this.editorData);
-
-   // this.noteToInsert.tags = this.tags;
-
-  // console.log('tags : ' + this.tags);
+  console.log('rawtext in createnote : ' + this.editorData);
 
   this.noteService.updateNote(this.noteToInsert).subscribe(data => {
     //this.router.navigate(['/usernotes']);
@@ -360,26 +349,26 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
     this.editor.save().then((outputData:any) => {
       this.editorData =  JSON.stringify(outputData, null, 2);
       console.log("*editordata : " + this.editorData);
-      let parsedData = JSON.parse(this.editorData);
+      //let parsedData = JSON.parse(this.editorData);
 
-    for (let i = 0; i < parsedData.blocks.length; i++) {
-          let block = parsedData.blocks[i];
-          if (block.type === 'header') {
-            this.HtmlData += '<header><h1>' + block.data.text + '</h1></header>';
-          }
-          if (block.type === 'paragraph') {
-            this.HtmlData += '<p>' + block.data.text + '</p>';
-          }
-          if (block.type === 'image') {
-            this.HtmlData += '<img src="' + block.data.file.url + '">';
-          }
-          if (block.type === 'raw') {
-            this.HtmlData += block.data.html;
-          }
-          if (block.type === 'linkTool') {
-            this.HtmlData += '<a href="' + block.data.link + '">' + block.data.link + '</a>';
-          }
-        }
+    // for (let i = 0; i < parsedData.blocks.length; i++) {
+    //       let block = parsedData.blocks[i];
+    //       if (block.type === 'header') {
+    //         this.HtmlData += '<header><h1>' + block.data.text + '</h1></header>';
+    //       }
+    //       if (block.type === 'paragraph') {
+    //         this.HtmlData += '<p>' + block.data.text + '</p>';
+    //       }
+    //       if (block.type === 'image') {
+    //         this.HtmlData += '<img src="' + block.data.file.url + '">';
+    //       }
+    //       if (block.type === 'raw') {
+    //         this.HtmlData += block.data.html;
+    //       }
+    //       if (block.type === 'linkTool') {
+    //         this.HtmlData += '<a href="' + block.data.link + '">' + block.data.link + '</a>';
+    //       }
+    //     }
     })}, 1000)
 
   ngOnDestroy(): void {
@@ -411,18 +400,18 @@ export class CreatenoteComponent implements OnInit, OnDestroy {
   
 
 
-      const images = $('img').map(function() {
-        return $(this).attr('src').toString();
-     });
-
-     for (let i = 0; i < images.length; i++) {
-       this.imageList.push(images[i].toString());
-     }
+    const images = this.editorElement.nativeElement.querySelectorAll('img');
+    //const imageList = [];
+  
+    images.forEach((img: HTMLImageElement) => {
+      this.imageList.push(img.src);
+  
+    });
 
    
     this.noteToInsert.userId = this.userId;
      this.noteToInsert.photos = this.imageList;
-     this.noteToInsert.isDraft = false;
+    // this.noteToInsert.isDraft = false;
      this.noteToInsert.tags = this.tagList;
      this.noteToInsert.text = this.HtmlData;
      this.noteToInsert.rawText = this.editorData;

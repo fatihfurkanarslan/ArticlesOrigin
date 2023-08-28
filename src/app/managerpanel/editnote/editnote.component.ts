@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Category } from './../../models/category';
 import axios from 'axios';
 import { NoteService } from 'src/app/services/note.service';
@@ -32,6 +32,9 @@ enum saveStatus {
 })
 export class EditnoteComponent implements OnInit {
 
+  @ViewChild('editorElement', { static: false }) editorElement: ElementRef;
+
+
   categories: Category[] = [];
   selectedOption: any = {};
   userId: any = {};
@@ -60,7 +63,6 @@ export class EditnoteComponent implements OnInit {
     this.userId = this.authService.decodedToken.nameid;
     this.httpClient.get("http://api.ipify.org/?format=json").subscribe((res: any) => {
       this.note.IPAddress = "" + res.ip;
-      console.log("idadress : " + this.note.IPAddress);
     });
 
     this.editor = new EditorJS({
@@ -87,8 +89,8 @@ export class EditnoteComponent implements OnInit {
                 data.append('NoteId', localStorage.getItem('noteId') || '');
                 data.append('MainPhoto', 'false');
 
-                console.log('file -->' + file);
-                return axios.post('http://api.articlesorigin.com/api/photo/insertphotonote', data, {
+                //console.log('file -->' + file);
+                return axios.post('http://apis.articlesorigin.com/api/photo/insertphotonote', data, {
                   headers: {
                     'accept': 'application/json',
                     'Content-Type': 'multipart/form-data'
@@ -109,8 +111,8 @@ export class EditnoteComponent implements OnInit {
                 data.append('NoteId', localStorage.getItem('noteId') || '');
                 data.append('MainPhoto', 'false');
 
-                console.log('url -->' + url);
-                return this.httpClient.post('http://api.articlesorigin.com/api/photo/insertphotonote', data, {
+               // console.log('url -->' + url);
+                return this.httpClient.post('http://apis.articlesorigin.com/api/photo/insertphotonote', data, {
                   headers: {
                     'accept': 'application/json',
                     'Content-Type': 'multipart/form-data'
@@ -131,16 +133,14 @@ export class EditnoteComponent implements OnInit {
       },
       onReady: () => {
         let noteId = localStorage.getItem('editNoteId');
-        console.log("noteid " + noteId);
+
 
         this.noteService.getNote(+noteId).subscribe(result => {
           this.note = result;
-          console.log("raw text in edit page" + this.note.rawText);
           this.editorData = this.note.rawText;
-
-          console.log(this.userId);
-
+          console.log("this.editorData : " + this.note)
           let parsedData = JSON.parse(this.editorData);
+          console.log("this.parseddata : " + parsedData)
           this.editor.render(parsedData);
         });
       },
@@ -160,7 +160,7 @@ export class EditnoteComponent implements OnInit {
   saveEditorData(): void {
     this.editor.save().then((outputData: any) => {
       this.editorData = JSON.stringify(outputData, null, 2);
-      console.log("*editordata : " + this.editorData);
+      //console.log("*editordata : " + this.editorData);
       let parsedData = JSON.parse(this.editorData);
 
       for (let i = 0; i < parsedData.blocks.length; i++) {
@@ -187,17 +187,16 @@ export class EditnoteComponent implements OnInit {
   onSubmit() {
     let noteId = localStorage.getItem('editNoteId');
 
-    const images = $('img').map(function () {
-      return $(this).attr('src').toString();
-    });
+    const images = this.editorElement.nativeElement.querySelectorAll('img');
+    //const imageList = [];
 
-    for (let i = 0; i < images.length; i++) {
-      this.imageList.push(images[i].toString());
-    }
+    images.forEach((img: HTMLImageElement) => {
+      this.imageList.push(img.src);
+    });
 
     this.note.userId = this.userId;
     this.note.photos = this.imageList;
-    this.note.isDraft = false;
+    //this.note.isDraft = false;
     this.note.text = this.HtmlData;
     this.note.rawText = this.editorData;
     this.note.id = +noteId;
@@ -214,17 +213,28 @@ export class EditnoteComponent implements OnInit {
   SaveDraft() {
     let noteId = localStorage.getItem('editNoteId');
 
-    const images = $('img').map(function () {
-      return $(this).attr('src').toString();
+    // const images = $('img').map(function () {
+    //   return $(this).attr('src').toString();
+    // });
+    // const images = Array
+    // .from(this.editorElement.nativeElement.querySelectorAll('img'))
+    // .map((img: HTMLImageElement) => img.src);
+    const images = this.editorElement.nativeElement.querySelectorAll('img');
+    //const imageList = [];
+
+    images.forEach((img: HTMLImageElement) => {
+      this.imageList.push(img.src);
     });
 
-    for (let i = 0; i < images.length; i++) {
-      this.imageList.push(images[i].toString());
-    }
+
+
+    // for (let i = 0; i < images.length; i++) {
+    //   this.imageList.push(images[i].toString());
+    // }
 
     this.note.userId = this.userId;
     this.note.photos = this.imageList;
-    this.note.isDraft = true;
+    //this.note.isDraft = true;
     this.note.id = +noteId;
     this.note.text = this.HtmlData;
     this.note.rawText = this.editorData;
@@ -249,7 +259,5 @@ export class EditnoteComponent implements OnInit {
       verticalPosition: 'top'
     });
   }
-
-  getIPAddress() { }
 
 }

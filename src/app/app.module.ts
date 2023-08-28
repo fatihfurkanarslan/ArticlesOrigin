@@ -115,9 +115,7 @@ import { Routes } from './routes';
 
 // fontawsome
 
- import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';   
 
 
 
@@ -143,9 +141,12 @@ import { PhotoService } from './services/photo.service';
 import { LikeService } from './services/like.service';
 import { ErrorphotobarComponent } from './errorphotobar/errorphotobar.component';
 import { ArrayFixPipe } from './array-fix.pipe';
+import { ShareComponent } from './share/share.component';
+import { ShareModalComponent } from './Utils/share-modal/share-modal.component';
+import { ClipboardModule } from 'ngx-clipboard';
+import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 
 // import { angularEditorConfig } from '@kolkov/angular-editor/lib/config';
-
 
 
 @NgModule({
@@ -181,7 +182,9 @@ import { ArrayFixPipe } from './array-fix.pipe';
       CategoriesComponent,
       CategoriesComponent,
       ArrayFixPipe,
-      UserAgreementComponent
+      UserAgreementComponent,
+      ShareComponent,
+      ShareModalComponent
    ],
    imports: [
       BrowserModule,
@@ -218,7 +221,10 @@ import { ArrayFixPipe } from './array-fix.pipe';
       MatAutocompleteModule,
       //bunlara bakılacak 13.07.2023
       FontAwesomeModule,
-      MatCardModule
+      MatCardModule,
+      ClipboardModule,
+      SocialLoginModule, 
+      GoogleSigninButtonModule
    ],
    providers: [
       AuthService,
@@ -232,7 +238,22 @@ import { ArrayFixPipe } from './array-fix.pipe';
       CommentService,
       PhotoService,
       LikeService,
-      NavComponent
+      NavComponent, 
+      {provide: "SocialAuthServiceConfig",
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+               "716568936281-4asr0o08fopn2es40jmfprjstd2o85mf.apps.googleusercontent.com",
+               {
+                  oneTapEnabled: false, // <===== default is true
+                })
+          }
+        ],
+        onError: err => console.log(err)
+      } as SocialAuthServiceConfig}
    ],
    bootstrap: [
       AppComponent

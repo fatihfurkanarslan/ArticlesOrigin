@@ -1,40 +1,42 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="z-index: 10">
-  <a class="navbar-brand" id="brand" [routerLink]="['/home']" routerLinkActive="active">ARTICLESORIGIN</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <div class="container"> <!-- Bootstrap 5'de container ekledik -->
+    <a class="navbar-brand" id="brand" [routerLink]="['/home']" routerLinkActive="active">ARTICLESORIGIN</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <div class="searchbar-container">
-      <mat-form-field class="searchbar">
-        <input matInput placeholder="Search" (keydown.enter)="searchNote()" [(ngModel)]="searchToTag" class="circle-input">
-      </mat-form-field>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="searchbar-container">
+        <mat-form-field class="searchbar">
+          <input matInput placeholder="Search" (keydown.enter)="searchNote()" [(ngModel)]="searchToTag" class="circle-input">
+        </mat-form-field>
 
-      <div *ngIf="currentUser$ | async" class="dropdown ms-auto">
-        <a class="dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown">
-          <img *ngIf="currentUser$ | async" class="circular" src="{{ photoUrl }}" alt="img">
-        </a>
-        <div class="dropdown-menu" id="dropdownMenu">
-          <a class="dropdown-item" [routerLink]="['/profile']" routerLinkActive="active">Profile</a>
-          <div *ngIf="isactive" class="dropdown-divider"></div>
+        <div *ngIf="currentUser$ | async" class="dropdown ms-auto">
+          <a class="dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+            <img *ngIf="currentUser$ | async" class="circular" src="{{ photoUrl }}" alt="img" referrerpolicy="no-referrer">
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenu">
+            <a class="dropdown-item" [routerLink]="['/profile']" routerLinkActive="active">Profile</a>
+            <div *ngIf="isactive" class="dropdown-divider"></div>
 
-          <a *ngIf="isactive" class="dropdown-item" [routerLink]="['/createnote']" routerLinkActive="active">Add Note</a>
-          <a *ngIf="isactive" class="dropdown-item" [routerLink]="['/usernotes']" routerLinkActive="active">My Notes</a>
+            <a *ngIf="isactive" class="dropdown-item" [routerLink]="['/createnote']" routerLinkActive="active">Add Note</a>
+            <a *ngIf="isactive" class="dropdown-item" [routerLink]="['/usernotes']" routerLinkActive="active">My Notes</a>
 
-          <div *ngIf="isactive" class="dropdown-divider"></div>
-          <a *ngIf="isactive" class="dropdown-item" [routerLink]="['/createcategory']" routerLinkActive="active">Add Category</a>
-          <a *ngIf="isactive" class="dropdown-item" [routerLink]="['/allcategories']" routerLinkActive="active">Categories</a>
+            <div *ngIf="isactive" class="dropdown-divider"></div>
+            <a *ngIf="isactive" class="dropdown-item" [routerLink]="['/createcategory']" routerLinkActive="active">Add Category</a>
+            <a *ngIf="isactive" class="dropdown-item" [routerLink]="['/allcategories']" routerLinkActive="active">Categories</a>
 
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="loggedOut()">Logout</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="loggedOut()">Logout</a>
+          </ul>
         </div>
       </div>
-   
 
-    <ng-container *ngIf="currentUser$ | async; else loginFormTemplate">
-      <!-- Logged in content here -->
-    </ng-container>
-  </div>
+      <ng-container *ngIf="currentUser$ | async; else loginFormTemplate">
+        <!-- Logged in content here -->
+      </ng-container>
+    </div>
+
     <ng-template #loginFormTemplate>
       <form #loginForm="ngForm" class="form-inline ms-auto">
         <button [disabled]="!loginForm.valid" mat-stroked-button type="submit" [routerLink]="['/login']" routerLinkActive="active">Login</button>

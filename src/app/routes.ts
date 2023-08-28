@@ -21,6 +21,7 @@ import { NavComponent } from './nav/nav.component';
 import { NotesbyuserComponent } from './notes/notesbyuser/notesbyuser.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { UserAgreementComponent } from './user-agreement/user-agreement.component';
+import { ShareComponent } from './share/share.component';
 
 
 export const Routes = [
@@ -37,7 +38,11 @@ export const Routes = [
   { path: 'editnote', component: EditnoteComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'editprofile', component: EditprofileComponent },
-  { path: 'login', component: LoginComponent },
+  //{ path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then(m => m.LoginModule)
+  },
   { path: 'useractivate/:id', component: ActivateuserComponent },
   { path: 'createtags', component: CreatetagsComponent },
   { path: 'searchednotes', component: SearchednotesComponent },
@@ -45,7 +50,8 @@ export const Routes = [
   { path: 'notesbyuser/:id', component: NotesbyuserComponent },
   { path: 'categories', component: CategoriesComponent },
   { path: '**', component: HomeComponent },
-  { path: 'user-agreement', component: UserAgreementComponent }
+  { path: 'user-agreement', component: UserAgreementComponent },
+  { path: 'share/:platform', component: ShareComponent }
 
 
 ];

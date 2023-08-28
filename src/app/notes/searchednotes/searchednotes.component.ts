@@ -94,26 +94,13 @@ export class SearchednotesComponent implements OnInit {
       (result : any ) => {
         // followeeId
          this.searchedPeople = result;
-         console.log(  "");
 
          this.searchedPeople.forEach(element => {
             console.log(" following info about " + element.username + " is " + element.isFollowed)
             if(element.isFollowed == true) element.followInfo = "unfollow"
             else element.followInfo = "follow"
         });
-
-        //  for (let index = 0; index < this.searchedPeople.length; index++) {
-        //   const element = this.searchedPeople[index].isfollowed;
-        //  }
-        //  this.followService.getFollowInfo().subscribe(
-        //  (result : any) => {
-
-        //  });
-
-        // for (let index = 0; index < array.length; index++) {
-        //   const element = array[index];
-
-        // }
+  
       },
       error => {console.log('profileService getUsers doesnt work')});
   }

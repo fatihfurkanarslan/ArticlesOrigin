@@ -1,13 +1,25 @@
 
-
 .note-container {
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   margin: 20px auto;
-  padding: 20px;
+  padding-inline: 10%;
+  padding-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+
+.note-info {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  text-align: center;
+  margin: 10px auto;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
@@ -24,6 +36,8 @@
 
 .note-container .ce-block {
   margin-bottom: 20px;
+  justify-content: space-between;
+
 }
 
 .note-container .ce-paragraph {
@@ -81,3 +95,23 @@
   .comment-container > .ng-star-inserted {
     width: 60%;
   }
+
+  .left-aligned {
+    text-align: left;
+  }
+
+
+  a {
+    color: black; /* Siyah rengi tanımlayın */
+    text-decoration: none; /* Opsiyonel: Altı çiziliyi kaldırabilirsiniz */
+  }
+  
+  a:hover {
+    color: rgb(39, 39, 43); /* Fare üzerine geldiğinde mavi rengi koruyun */
+  }
+/*   
+  share button css */
+
+
+  
+  

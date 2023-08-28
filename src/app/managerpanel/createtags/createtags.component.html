@@ -4,7 +4,7 @@
     <div class="form-group">
     <mat-form-field style="width: 100%">
       <mat-label>Choose The Category</mat-label>
-      <mat-select style="width: 100%" [(value)]="selectedOption">
+      <mat-select style="width: 100%" [(value)]="selectedOption" (selectionChange)="onCategorySelectionChange($event.value)">
         <mat-option *ngFor="let cat of categories" [value]="cat.id">
           {{cat?.categoryname}}
         </mat-option>

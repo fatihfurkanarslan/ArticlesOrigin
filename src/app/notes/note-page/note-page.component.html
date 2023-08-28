@@ -1,30 +1,71 @@
+<div class="note-info">
+  <div class="d-flex justify-content-between">
+  <div class="p-2">
+    <a [routerLink]="['/notesbyuser', note?.userId]">
+      {{note?.onModifiedUsername}}
+    </a>
+
+    
+    <!-- <div>
+        <button class="text-right" (click)="FollowWriter($event.target, note.userId)" mat-button>
+          {{followInfo}}</button>
+    </div> -->
+
+  </div>
+  <div class="p-2">
+    <div class="container">
+
+       
+        <a (click)="copyUrlToClipboard()" style="cursor: pointer;">
+          <span *ngIf="isCopied" class="copied-text">Copied</span>
+        <fa-icon [icon]="linkIcon" size="lg" [fixedWidth]="true"></fa-icon>  
+      </a>
+  
+      
+
+      <a (click)="shareOnTwitter()" style="cursor: pointer;">
+        <fa-icon [icon]="twitterIcon" size="lg" [fixedWidth]="true"></fa-icon>
+      </a>
+
+      <a (click)="shareOnFacebook()" style="cursor: pointer;">
+        <fa-icon [icon]="facebookIcon" size="lg" [fixedWidth]="true"></fa-icon>
+      </a>
+
+      <a (click)="shareOnWhatsapp()" style="cursor: pointer;">
+        <fa-icon [icon]="whatsappIcon" size="lg" [fixedWidth]="true"></fa-icon>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+
+
 <div class="note-container">
   <div class="title-container">
     <h1 class="note-title">{{ note?.title }}</h1>
   </div>
   <br>
-  <br>
   <div class="ce-block">
     <div class="ce-block__content">
       <ng-container [ngSwitch]="b?.type" *ngFor="let b of toBeParsedData?.blocks">
-        <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <div fxLayout="row" fxLayoutGap="5px">
           <div fxFlex="92">
             <!-- Paragraph -->
-            <div *ngSwitchCase="'paragraph'" class="ce-paragraph cdx-block" [innerHTML]="b?.data?.text"></div>
+            <div *ngSwitchCase="'paragraph'" class="ce-paragraph cdx-block left-aligned" [innerHTML]="b?.data?.text"></div>
   
             <!-- Header -->
-            <div style="height: fit-content;" *ngSwitchCase="'header'"
+            <div fxLayoutAlign="start center" style="height: fit-content;" *ngSwitchCase="'header'"
               [innerHTML]="'<h' + b?.data?.level + ' class=ce-header' + '>' + b?.data?.text + '</h' + b?.data?.level + '>'"></div>
   
             <!-- Raw -->
-            <div *ngSwitchCase="'raw'" class="ce-raw cdx-block">
+            <div  fxLayoutAlign="start center" *ngSwitchCase="'raw'" class="ce-raw cdx-block">
               <div class="code-block">
                 <pre><code [innerHTML]="b?.data?.html"></code></pre>
               </div>
             </div>
   
             <!-- Image / Video -->
-            <div *ngSwitchCase="'image'">
+            <div  fxLayoutAlign="start center" *ngSwitchCase="'image'">
               <div class="cdx-block image-tool image-tool--filled" *ngIf="b?.data?.file?.url">
                 <div class="image-tool__image">
                   <ng-container>
